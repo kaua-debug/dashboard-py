@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard de Estudos</title>
+     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Dashboard de Estudos</h1>
+
+    <form action="/adicionar" method="post">
+        <h2>Adicionar novo Registro</h2>
+        <label for="materia">Matéria:</label>
+        <input 
+        type="text" 
+        name="materia" 
+        id="materia" 
+        required>
+
+        <label for="horas">Horas Estudadas</label>
+        <input 
+        type="text" 
+        name="horas" 
+        id="horas" 
+        step="0.1" 
+        required>
+        <label for="data">Data:</label>
+        <input 
+        type="date" 
+        id="data" 
+        name="data" 
+        required>
+
+        <button type="submit">Adicionar Registro</button>
+    </form>
+
+     <hr>
+
+     <h2>Registro de Estudos</h2>
+     {% if registros %}
+     <table>
+        <thead>
+            <tr>
+                <th>Matéria</th>
+                <th>Horas</th>
+                <th>Data</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for registro in registros %}
+            <tr>
+
+            <td>{{ registro.materia }}</td>
+            <td>{{ registro.horas }}</td>
+            <td>{{ registro.data }}</td>
+
+            </tr>
+            {% endfor %}
+        </tbody>
+     </table>
+     {% else %}
+     <p>Nenhum registro de estudo ainda. Adicione um acima!</p>
+     {% endif %}
+
+         <hr>
+
+    <div id="chartContainer">
+        <h2>Horas Estudadas por Matéria</h2>
+        <canvas id="studyHoursChart"></canvas>
+    </div>
+
+    <script>
+        // Passar os dados do Flask para uma variável global antes de carregar o script externo
+        window.studyRecords = {{ registros | tojson }};
+    </script>
+    <script src="{{ url_for('static', filename='js/chart_setup.js') }}"></script>
+
+</body>
+</html>
