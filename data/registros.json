@@ -1,7 +1,17 @@
 [
     {
-        "materia": "programa\u00e7\u00e3o",
-        "horas": 4.0,
-        "data": "2025-05-22"
+        "materia": "marketing",
+        "horas": 2.0,
+        "data": "2025-05-27"
+    },
+    {
+        "materia": "educa\u00e7a\u00f5 financeira",
+        "horas": 0.5,
+        "data": "2025-05-27"
+    },
+    {
+        "materia": "T.I",
+        "horas": 8.0,
+        "data": "2025-05-27"
     }
 ]

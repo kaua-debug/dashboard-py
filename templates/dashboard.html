@@ -21,10 +21,11 @@
 
         <label for="horas">Horas Estudadas</label>
         <input 
-        type="text" 
+        type="number" 
         name="horas" 
         id="horas" 
-        step="0.1" 
+        step="0.1"
+        min="0" 
         required>
         <label for="data">Data:</label>
         <input 
@@ -39,13 +40,18 @@
      <hr>
 
      <h2>Registro de Estudos</h2>
-     {% if registros %}
+
+        {% if registros %}
+
+                <p>Total de horas estudadas: {{ registros | sum(attribute='horas') }}</p>
+
      <table>
         <thead>
             <tr>
                 <th>Matéria</th>
                 <th>Horas</th>
                 <th>Data</th>
+                <th>Ações</th>
             </tr>
         </thead>
         <tbody>
@@ -55,6 +61,14 @@
             <td>{{ registro.materia }}</td>
             <td>{{ registro.horas }}</td>
             <td>{{ registro.data }}</td>
+
+                    <td>
+                    <form action="/remover" method="post" style="display:inline;">
+                        <input type="hidden" name="materia" value="{{ registro.materia }}">
+                        <input type="hidden" name="data" value="{{ registro.data }}">
+                        <button type="submit" class="remover">Remover</button>
+                    </form>
+                </td>
 
             </tr>
             {% endfor %}
@@ -76,6 +90,9 @@
         window.studyRecords = {{ registros | tojson }};
     </script>
     <script src="{{ url_for('static', filename='js/chart_setup.js') }}"></script>
+
+    <button id="toggleTheme">🌙 Alternar Tema</button>
+
 
 </body>
 </html>
